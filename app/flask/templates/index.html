@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>{{title}}</h1>
+
+{% if cates %}
+<form action="/pic" method="GET">
+  {% for cate in cates %}
+  <div>
+    <label for={{cate}}>{{cate}}</label>
+    <input type="radio" id={{cate}} name="cate" value={{cate}} {% if cate == selected %}checked="checked"{% endif %}>
+  </div>
+  {% endfor %}
+  <br>
+  <div>
+    <input type="submit" value="送信">
+  </div>
+</form>
+{% endif %}
+
+<br>
+<div>
+{% if images %}
+  {% for image in images %}
+    <img src="{{url_for('static', filename=image)}}" alt={{image}} width="300" />
+  {% endfor %}
+{% endif %}
+</div>
+{% endblock %}
