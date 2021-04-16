@@ -13,14 +13,14 @@ cates= es.get_category(index_name)
 
 @app.route('/')
 def index():
-  return render_template("index.html", title="FF14_image", cates=cates)
+  return render_template("index.html", title="image", cates=cates)
 
 @app.route('/pic', methods=['GET', 'POST'])
 def post():
   cate = request.args.get('cate')
   images = es.get_doc(index_name, cate) 
   return render_template('index.html', \
-    title = 'FF14_image', \
+    title = 'image', \
     message = '{}'.format(cate), cates=cates, selected=cate, images=images)
 
 
