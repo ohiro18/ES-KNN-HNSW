@@ -33,23 +33,4 @@ for f in img_path.glob('*.jpg'):
             }
             )
 
-from elasticsearch import helpers
-from datetime import datetime
-
-index_name = 'test_image'
-category = 'shadowbringers'
-
-# フォルダ内の画像リストを取得して、Elasticsearchに送る
-img_path = pathlib.Path('C:\\Users\\1200358\\Dev\\ES-KNN-HNSW\\app\\flask\\static')
-actions = []
-for f in img_path.glob('*.jpg'):
-    #print(f.name)
-    f_id = f.name.split('.')
-    
-    doc = { "image_name" : f.name, 'timestamp': datetime.utcnow(), "category" : category}
-    
-    actions.append({'_index':index_name, '_type':'_doc', '_id':f_id[0],  '_source':doc})
-
-
-helpers.bulk(es, actions)
 
