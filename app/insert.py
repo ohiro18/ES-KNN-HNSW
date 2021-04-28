@@ -1,5 +1,7 @@
 from elasticsearch import Elasticsearch
+from elasticsearch import helpers
 from datetime import datetime
+from keras_vgg16 import VGGNet  
 
 import pathlib
 import glob
@@ -15,12 +17,16 @@ index_name = "web_app_test"
 img_path = pathlib.Path('C:\\Users\\1200358\\Dev\\ES-KNN-HNSW\\app\\flask\\static')
 dataset_dict = []
 
+model = VGGNet()  
+
 for f in img_path.glob('*.jpg'):
     #print(f.name)
     f_id = f.name.split('.')    
+    feature = model.extract_feat(f).tolist()  #vgg16 モデルを用いて特徴量データへ変換
+
     doc = { 
         "image_name" : f.name, 
-        'timestamp': datetime.utcnow(), 
+        "feature" : feature 
         }
 
     dataset_dict.append(
@@ -33,6 +39,6 @@ for f in img_path.glob('*.jpg'):
     )
 
 # ES indexへ一括インポート
-Elasticsearch.bulk(es, dataset_dict)
+helpers.bulk(es, dataset_dict)
 
 

@@ -4,11 +4,11 @@ import es_operation
 
 app = Flask(__name__)
 
-ELASTIC_SERVER = '192.168.1.3:9200'
-ELASTIC_SERVER = 'elasticsearch:9200'
+
+ELASTIC_SERVER = 'elastic:FY21!hands-on@es-cn-mjc2443530001o0te.public.elasticsearch.aliyuncs.com:9200'
 es = es_operation.Ela(es_server=ELASTIC_SERVER)
 
-index_name = 'test_image'
+index_name = 'hans_on_image_search'
 cates= es.get_category(index_name)
 
 @app.route('/')
